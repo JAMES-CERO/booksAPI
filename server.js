@@ -1,6 +1,6 @@
 const express = require("express")
 const mongoose =  require("mongoose")
-
+const cors = require("cors")
 
 
 //Configuration
@@ -14,12 +14,16 @@ mongoose.connect(process.env.MONGO_URI,  {useNewUrlParser: true, useUnifiedTopol
 //MIDDLEWARE
 app.use(express.urlencoded({ extended: true}))
 app.use(express.json())
-
+app.use(cors())
 
 //ROUTES
 app.get("/", (req, res) => {
     res.send("Hello World")
 })
+
+app.get('/products/:id', cors(), function (req, res, next) {
+    res.json({msg: 'This is CORS-enabled for all origins!'})
+  })
 
 //controllers
 const booksController = require("./controllers/books_controllers")
